@@ -1,4 +1,7 @@
 import dearpygui.dearpygui as dpg
+import csv
+import os
+
 
 def save_user():
     print("User saved")
@@ -11,6 +14,24 @@ def submit(sender, data):
     print("SUBMIT BUTTON")
     input_name = dpg.get_value("#name_input")
     print(input_name)
+    print(os.getcwd())
+
+    with open ("newfile.csv","a", newline="") as csvfile:
+        fields = ["Name", "Age", "Sex", "N2", "P3", "RSPM", "SF-36"]
+        writer = csv.DictWriter(csvfile, fieldnames=fields)
+        
+        if not os.path.isfile("newfile.csv") or  os.path.getsize("newfile.csv") == 0:
+            writer.writeheader()
+
+        writer.writerow({
+                "Name": "Atif",
+                "Age": "30",
+                "Sex": "M",
+                "N2": "2",
+                "P3": "3",
+                "RSPM": "4",
+                "SF-36": "5"
+            })
 
 with dpg.font_registry():
     default_font = dpg.add_font("Roboto-VariableFont_wdth,wght.ttf", 40)
@@ -35,7 +56,6 @@ with dpg.window(label="Create User", height=1080, width=1920):
             p3 = dpg.add_input_float()
             rspm = dpg.add_input_float()
 
-            
 # This sets the font for the specific widget
 dpg.bind_font(default_font)
 
