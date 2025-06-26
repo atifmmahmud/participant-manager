@@ -56,6 +56,23 @@ with dpg.window(label="Create User", height=1080, width=1920):
             p3 = dpg.add_input_float()
             rspm = dpg.add_input_float()
 
+            with dpg.table(header_row=False):
+                # use add_table_column to add columns to the table,
+                # table columns use child slot 0
+                dpg.add_table_column()
+                dpg.add_table_column()
+                dpg.add_table_column()
+                dpg.add_table_column()
+                dpg.add_table_column()
+
+                # add_table_next_column will jump to the next row
+                # once it reaches the end of the columns
+                # table next column use slot 1
+                for i in range(0, 4):
+                    with dpg.table_row():
+                        for j in range(0, 4):
+                            dpg.add_text(f"Row{i} Column{j}")
+
 # This sets the font for the specific widget
 dpg.bind_font(default_font)
 
