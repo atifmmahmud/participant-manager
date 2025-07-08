@@ -2,6 +2,7 @@ import dearpygui.dearpygui as dpg
 import csv
 import os
 from participant import Participant
+from screeninfo import get_monitors
 
 def save_user():
     print("User saved")
@@ -36,7 +37,10 @@ with dpg.font_registry():
     default_font = dpg.add_font("Roboto-VariableFont_wdth,wght.ttf", 40)
 
 ## MAIN WINDOW
-with dpg.window(label="Create User", height=1080, width=1920):
+monitor = get_monitors()[0]
+screen_width = monitor.width
+screen_height = monitor.height
+with dpg.window(label="Create User", height=screen_height, width=screen_width):
     
     ## INPUT AREA
     with dpg.group(horizontal=True):
@@ -68,7 +72,7 @@ with dpg.window(label="Create User", height=1080, width=1920):
     dpg.add_spacer(height=20)
 
     ## TABLE DISPLAY OF USERS
-    with dpg.child_window(height=800, width=1920):
+    with dpg.child_window(height=screen_height/4, width=screen_width * 0.99):
         with dpg.group(horizontal=True):
             with dpg.table(header_row=True, tag="PARTICIPANTS"):
                 # use add_table_column to add columns to the table,
