@@ -1,0 +1,22 @@
+To replicate the *covariate adaptive randomization* procedure, you would need to:
+
+1. *Randomize the first 10 participants* using simple random assignment (e.g., random number generator).
+2. *Identify key covariates* to balance between groups:
+    - Age
+    - Sex assigned at birth
+    - Pre-intervention IQ (RSPM)
+    - Self-rated health (SF-36)
+    - Behavioral performance (reaction time, accuracy)
+    - Cognitive measurements (ERPs)
+3. *For each new participant (from participant 11 onward)*:
+    - Temporarily simulate assigning them to each group.
+    - For each simulated assignment, run t-tests comparing covariates across groups.
+    - Record the lowest p-value for each group assignment.
+    - Assign the participant to the group with the *higher minimum p-value* (i.e., the assignment that leads to better covariate balance).
+4. *Repeat steps 2 and 3 for each new enrollee.*
+
+This method ensures group balance over time while allowing for continuous enrollment.
+
+
+
+(we could randomize the first 10 as well but technically we already have participants in the study and its just ongoing)
