@@ -4,14 +4,28 @@ import os
 from participant import Participant
 from screeninfo import get_monitors
 
+def load_existing_participants():
+    if not os.path.isfile("newfile.csv"):
+        return  # No file, nothing to load
+
+    with open("newfile.csv", "r", newline="") as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            with dpg.table_row(parent="PARTICIPANTS"):
+                dpg.add_text(row["Name"])
+                dpg.add_text(row["Age"])
+                dpg.add_text(row["Sex"])
+                dpg.add_text(round(float(row["N2"]), 2))
+                dpg.add_text(round(float(row["P3"]), 2))
+                dpg.add_text(round(float(row["RSPM"]), 2))
+                dpg.add_text(round(float(row["SF-36"]), 2))
+
 def save_user():
     print("User saved")
 
 dpg.create_context()
 dpg.create_viewport()
 dpg.setup_dearpygui()
-
-
 
 ## SUBMIT
 def submit(sender, data):
@@ -98,10 +112,10 @@ with dpg.window(label="Create User", height=screen_height, width=screen_width, t
             name = dpg.add_input_text(tag="#name_input")
             age = dpg.add_input_int(tag="#age_input", step=0)
             sex = dpg.add_input_text(tag="#sex_input")
-            n2 = dpg.add_input_float(tag="#n2_input", step=0, format="0.00")
-            p3 = dpg.add_input_float(tag="#p3_input", step=0, format="0.00")
-            rspm = dpg.add_input_float(tag="#rspm_input", step=0, format="0.00")
-            sf36 = dpg.add_input_float(tag="#sf36_input", step=0, format="0.00")
+            n2 = dpg.add_input_float(tag="#n2_input", step=0)
+            p3 = dpg.add_input_float(tag="#p3_input", step=0)
+            rspm = dpg.add_input_float(tag="#rspm_input", step=0)
+            sf36 = dpg.add_input_float(tag="#sf36_input", step=0)
 
     dpg.add_spacer(height=20)
     dpg.add_spacer(height=20)
@@ -136,7 +150,10 @@ with dpg.window(label="Create User", height=screen_height, width=screen_width, t
 
 # This sets the font for the specific widget
 dpg.bind_font(default_font)
-
+load_existing_participants()
 dpg.show_viewport()
+
+
 dpg.start_dearpygui()
 dpg.destroy_context()
+
