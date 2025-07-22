@@ -13,10 +13,11 @@ dpg.setup_dearpygui()
 
 
 
-## SUBMIT: Add to CSV
+## SUBMIT
 def submit(sender, data):
     input_name = dpg.get_value("#name_input")
 
+    ## Add to table
     with dpg.table_row(parent="PARTICIPANTS"):
         dpg.add_text(dpg.get_value("#name_input"))
         dpg.add_text(dpg.get_value("#age_input"))
@@ -26,12 +27,24 @@ def submit(sender, data):
         dpg.add_text(round(dpg.get_value("#rspm_input"), 2))
         dpg.add_text(round(dpg.get_value("#sf36_input"), 2))      
     
+    ## Create CSV/add header
     with open ("newfile.csv","a", newline="") as csvfile:
         fields = ["Name", "Age", "Sex", "N2", "P3", "RSPM", "SF-36"]
         writer = csv.DictWriter(csvfile, fieldnames=fields)
         
         if not os.path.isfile("newfile.csv") or  os.path.getsize("newfile.csv") == 0:
             writer.writeheader()
+        
+        writer.writerow({
+            "Name": dpg.get_value("#name_input"),
+            "Age": dpg.get_value("#age_input"),
+            "Sex": dpg.get_value("#sex_input"),
+            "N2": dpg.get_value("#n2_input"),
+            "P3": dpg.get_value("#p3_input"),
+            "RSPM": dpg.get_value("#rspm_input"),
+            "SF-36": dpg.get_value("#sf36_input"),
+            }
+        )
 
 with dpg.font_registry():
     default_font = dpg.add_font("Roboto-VariableFont_wdth,wght.ttf", 40)
