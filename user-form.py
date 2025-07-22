@@ -91,38 +91,37 @@ monitor = get_monitors()[0]
 screen_width = monitor.width
 screen_height = monitor.height
 with dpg.window(label="Create User", height=screen_height, width=screen_width, tag="MAIN_WINDOW"):
-    # BIND THE THEME TO THAT WINDOW
-    dpg.bind_item_theme("MAIN_WINDOW", medtech_theme)
-    ## INPUT AREA
-    with dpg.group(horizontal=True):
-        ## INPUT TITLE
-        with dpg.group(horizontal=False):
-            dpg.add_text("Name", tag="NAME_TEXT")
-            dpg.add_text("Age")
-            dpg.add_text("Sex")
-            dpg.add_text("N2 Amplitude (absolute)")
-            dpg.add_text("P3 Amplitude (absolute)")
-            dpg.add_text("RSPM Score")
-            dpg.add_text("SF-36 Score")
-            dpg.add_spacer(height=20)
-            dpg.add_spacer(height=20)
-            dpg.add_button(label="Submit", callback=submit)
-        ## INPUT FIELD
-        with dpg.group(horizontal=False):
-            name = dpg.add_input_text(tag="#name_input")
-            age = dpg.add_input_int(tag="#age_input", step=0)
-            sex = dpg.add_input_text(tag="#sex_input")
-            n2 = dpg.add_input_float(tag="#n2_input", step=0)
-            p3 = dpg.add_input_float(tag="#p3_input", step=0)
-            rspm = dpg.add_input_float(tag="#rspm_input", step=0)
-            sf36 = dpg.add_input_float(tag="#sf36_input", step=0)
+    with dpg.child_window(height=screen_height * 0.5, width=screen_width * 0.5):
+        # BIND THE THEME TO THAT WINDOW
+        dpg.bind_item_theme("MAIN_WINDOW", medtech_theme)
+        ## INPUT AREA
+        with dpg.group(horizontal=True):
+            ## INPUT TITLE
+            with dpg.group(horizontal=False):
+                dpg.add_text("Name", tag="NAME_TEXT")
+                dpg.add_text("Age")
+                dpg.add_text("Sex")
+                dpg.add_text("N2 Amplitude (absolute)")
+                dpg.add_text("P3 Amplitude (absolute)")
+                dpg.add_text("RSPM Score")
+                dpg.add_text("SF-36 Score")
+                dpg.add_spacer(height=20)
+                dpg.add_button(label="Submit", callback=submit)
+            ## INPUT FIELD
+            with dpg.group(horizontal=False):
+                name = dpg.add_input_text(tag="#name_input", width=screen_width * 0.25)
+                age = dpg.add_input_int(tag="#age_input", step=0, width=screen_width * 0.25)
+                sex = dpg.add_input_text(tag="#sex_input", width=screen_width * 0.25)
+                n2 = dpg.add_input_float(tag="#n2_input", step=0, width=screen_width * 0.25)
+                p3 = dpg.add_input_float(tag="#p3_input", step=0, width=screen_width * 0.25)
+                rspm = dpg.add_input_float(tag="#rspm_input", step=0, width=screen_width * 0.25)
+                sf36 = dpg.add_input_float(tag="#sf36_input", step=0, width=screen_width * 0.25)
 
     dpg.add_spacer(height=20)
-    dpg.add_spacer(height=20)
-    dpg.add_spacer(height=20)
+
 
     ## TABLE DISPLAY OF USERS
-    with dpg.child_window(height=screen_height/4, width=screen_width * 0.95):
+    with dpg.child_window(height=screen_height/4, width=screen_width * 0.98):
         with dpg.group(horizontal=True):
             with dpg.table(header_row=True, tag="PARTICIPANTS"):
                 # use add_table_column to add columns to the table,
