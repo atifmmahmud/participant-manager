@@ -49,12 +49,36 @@ def submit(sender, data):
 with dpg.font_registry():
     default_font = dpg.add_font("Roboto-VariableFont_wdth,wght.ttf", 40)
 
+# 🧬 Medical-Grade Dark Theme: Professional & Clean
+with dpg.theme() as medtech_theme:
+    with dpg.theme_component(dpg.mvAll):
+        dpg.add_theme_color(dpg.mvThemeCol_WindowBg, (28, 30, 34), category=dpg.mvThemeCat_Core)
+        dpg.add_theme_color(dpg.mvThemeCol_ChildBg, (38, 40, 45), category=dpg.mvThemeCat_Core)
+        dpg.add_theme_color(dpg.mvThemeCol_PopupBg, (40, 42, 48), category=dpg.mvThemeCat_Core)
+        dpg.add_theme_color(dpg.mvThemeCol_Text, (230, 230, 230), category=dpg.mvThemeCat_Core)
+        dpg.add_theme_color(dpg.mvThemeCol_TextDisabled, (150, 150, 150), category=dpg.mvThemeCat_Core)
+        dpg.add_theme_color(dpg.mvThemeCol_FrameBg, (50, 53, 60), category=dpg.mvThemeCat_Core)
+        dpg.add_theme_color(dpg.mvThemeCol_FrameBgHovered, (65, 70, 80), category=dpg.mvThemeCat_Core)
+        dpg.add_theme_color(dpg.mvThemeCol_FrameBgActive, (90, 100, 110), category=dpg.mvThemeCat_Core)
+        dpg.add_theme_color(dpg.mvThemeCol_Button, (60, 65, 75), category=dpg.mvThemeCat_Core)
+        dpg.add_theme_color(dpg.mvThemeCol_ButtonHovered, (80, 90, 100), category=dpg.mvThemeCat_Core)
+        dpg.add_theme_color(dpg.mvThemeCol_ButtonActive, (100, 110, 130), category=dpg.mvThemeCat_Core)
+        dpg.add_theme_color(dpg.mvThemeCol_SliderGrab, (150, 180, 255), category=dpg.mvThemeCat_Core)
+        dpg.add_theme_color(dpg.mvThemeCol_SliderGrabActive, (180, 210, 255), category=dpg.mvThemeCat_Core)
+        dpg.add_theme_style(dpg.mvStyleVar_FrameRounding, 6, category=dpg.mvThemeCat_Core)
+        dpg.add_theme_style(dpg.mvStyleVar_FramePadding, 10, 6, category=dpg.mvThemeCat_Core)
+        dpg.add_theme_style(dpg.mvStyleVar_WindowPadding, 20, 20, category=dpg.mvThemeCat_Core)
+        dpg.add_theme_style(dpg.mvStyleVar_ItemSpacing, 10, 8, category=dpg.mvThemeCat_Core)
+
+dpg.bind_theme(medtech_theme)
+
 ## MAIN WINDOW
 monitor = get_monitors()[0]
 screen_width = monitor.width
 screen_height = monitor.height
-with dpg.window(label="Create User", height=screen_height, width=screen_width):
-    
+with dpg.window(label="Create User", height=screen_height, width=screen_width, tag="MAIN_WINDOW"):
+    # BIND THE THEME TO THAT WINDOW
+    dpg.bind_item_theme("MAIN_WINDOW", medtech_theme)
     ## INPUT AREA
     with dpg.group(horizontal=True):
         ## INPUT TITLE
@@ -72,20 +96,19 @@ with dpg.window(label="Create User", height=screen_height, width=screen_width):
         ## INPUT FIELD
         with dpg.group(horizontal=False):
             name = dpg.add_input_text(tag="#name_input")
-            age = dpg.add_input_int(tag="#age_input")
+            age = dpg.add_input_int(tag="#age_input", step=0)
             sex = dpg.add_input_text(tag="#sex_input")
-            n2 = dpg.add_input_float(tag="#n2_input")
-            p3 = dpg.add_input_float(tag="#p3_input")
-            rspm = dpg.add_input_float(tag="#rspm_input")
-            sf36 = dpg.add_input_float(tag="#sf36_input")
+            n2 = dpg.add_input_float(tag="#n2_input", step=0)
+            p3 = dpg.add_input_float(tag="#p3_input", step=0)
+            rspm = dpg.add_input_float(tag="#rspm_input", step=0)
+            sf36 = dpg.add_input_float(tag="#sf36_input", step=0)
 
-    dpg.add_spacer(height=20)
     dpg.add_spacer(height=20)
     dpg.add_spacer(height=20)
     dpg.add_spacer(height=20)
 
     ## TABLE DISPLAY OF USERS
-    with dpg.child_window(height=screen_height/4, width=screen_width * 0.99):
+    with dpg.child_window(height=screen_height/4, width=screen_width * 0.95):
         with dpg.group(horizontal=True):
             with dpg.table(header_row=True, tag="PARTICIPANTS"):
                 # use add_table_column to add columns to the table,
